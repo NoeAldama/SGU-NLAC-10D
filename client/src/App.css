@@ -1,236 +1,272 @@
-/* --- Variables de Color (Tema Oscuro) --- */
 :root {
-  --bg-color: #121212;
-  --surface-color: #1e1e1e;
-  --primary-color: #bb86fc;
-  --primary-variant: #3700b3;
-  --secondary-color: #03dac6;
-  --text-color: #e0e0e0;
-  --text-color-secondary: #aaaaaa;
-  --border-color: #333333;
-  --error-color: #cf6679;
-}
-
-/* --- Reseteo Básico y Fuente Global --- */
-* {
-  box-sizing: border-box;
+  --bg-body: #121212;
+  --bg-panel: #1e1e1e;
+  --bg-input: #2d2d2d;
+  
+  --primary: #646cff;
+  --primary-hover: #535bf2;
+  --danger: #ef4444;
+  --text-main: #ffffff;
+  --text-muted: #a1a1aa;
+  --border: #404040;
+  
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  --radius: 12px;
 }
 
 body {
   margin: 0;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-body);
+  color: var(--text-main);
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: var(--bg-color);
-  color: var(--text-color);
 }
 
-/* --- Contenedor Principal --- */
-.app-container {
-  max-width: 1400px;
-  margin: 2rem auto;
-  padding: 1rem;
+/* --- Layout General --- */
+.app-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-header h1 {
-  text-align: center;
-  color: var(--primary-color);
-  font-weight: 700;
-  letter-spacing: 1px;
+.navbar {
+  background-color: var(--bg-panel);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: center;
+  box-shadow: var(--shadow);
 }
 
-/* --- Layout de Contenido (Grid) --- */
-.content-layout {
+.navbar-content {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo {
+  background: var(--primary);
+  color: white;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 1.2rem;
+}
+
+.navbar h1 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: var(--text-main);
+}
+
+.main-container {
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* --- Grid System --- */
+.layout-grid {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 350px 1fr; /* Fijo izquierda, flexible derecha */
   gap: 2rem;
-  margin-top: 2rem;
+  align-items: start;
 }
 
-/* --- Estilo de Tarjetas --- */
-.card {
-  background-color: var(--surface-color);
-  border-radius: 12px;
-  padding: 1.5rem 2rem;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+/* --- Paneles (Cards) --- */
+.panel {
+  background-color: var(--bg-panel);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  box-shadow: var(--shadow);
 }
 
-.card h2 {
-  margin-top: 0;
-  color: var(--secondary-color);
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 0.5rem;
+.panel-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255,255,255,0.02);
 }
 
-/* --- Estilos del Formulario --- */
-.form-group {
+.panel-header h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.panel-body {
+  padding: 1.5rem;
+}
+
+/* --- Formulario --- */
+.input-group {
   margin-bottom: 1.25rem;
 }
 
-.form-group label {
+label {
   display: block;
   margin-bottom: 0.5rem;
-  font-weight: 500;
-  color: var(--text-color-secondary);
+  font-size: 0.9rem;
+  color: var(--text-muted);
 }
 
-.form-group input {
+input {
   width: 100%;
-  padding: 0.75rem 1rem;
-  background-color: #2c2c2c;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  color: var(--text-color);
+  padding: 0.75rem;
+  background-color: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: white;
   font-size: 1rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: all 0.2s;
 }
 
-.form-group input:focus {
+input:focus {
   outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(187, 134, 252, 0.2);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(100, 108, 255, 0.2);
 }
 
-/* --- Estilos de Botones --- */
-.form-buttons {
+.button-group {
   display: flex;
-  gap: 1rem;
-  margin-top: 1.5rem;
+  gap: 10px;
+  margin-top: 2rem;
 }
 
 .btn {
   padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 8px;
-  font-size: 1rem;
+  border-radius: 6px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  text-transform: uppercase;
+  transition: all 0.2s;
+  flex: 1;
 }
 
 .btn-primary {
-  background-color: var(--primary-color);
-  color: #121212;
+  background-color: var(--primary);
+  color: white;
 }
+
 .btn-primary:hover {
-  background-color: #a056f7;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  background-color: var(--primary-hover);
 }
 
 .btn-secondary {
-  background-color: #4f4f4f;
-  color: var(--text-color);
+  background-color: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
 }
+
 .btn-secondary:hover {
-  background-color: #616161;
+  background-color: rgba(255,255,255,0.1);
+  color: white;
 }
 
-/* --- Estilos de la Tabla --- */
-.table-wrapper {
-  overflow-x: auto; /* Para responsividad en tablas */
+/* --- Tabla --- */
+.table-responsive {
+  overflow-x: auto;
 }
 
-table {
+.data-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 1rem;
+  font-size: 0.95rem;
 }
 
-th, td {
-  padding: 1rem;
+.data-table th {
   text-align: left;
-  border-bottom: 1px solid var(--border-color);
+  padding: 1rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  border-bottom: 1px solid var(--border);
 }
 
-thead th {
-  background-color: #2c2c2c;
-  color: var(--secondary-color);
+.data-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--bg-input);
+  vertical-align: middle;
+}
+
+.data-table tr:last-child td {
+  border-bottom: none;
+}
+
+.data-table tr:hover {
+  background-color: rgba(255,255,255,0.02);
+}
+
+.user-name {
+  display: block;
   font-weight: 600;
+  color: var(--text-main);
 }
 
-tbody tr:hover {
-  background-color: #2a2a2a;
+.user-id {
+  font-size: 0.8rem;
+  color: var(--text-muted);
 }
 
-.action-buttons {
+.contact-info {
   display: flex;
-  gap: 0.5rem;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
 }
 
-.btn-edit {
-  background-color: var(--secondary-color);
-  color: #121212;
+/* --- Botones de Acción --- */
+.actions-cell {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background 0.2s;
+  font-size: 1.2rem;
+}
+
+.icon-btn:hover {
+  background-color: var(--bg-input);
+}
+
+.badge {
+  background-color: var(--bg-input);
+  padding: 4px 8px;
+  border-radius: 12px;
   font-size: 0.8rem;
-  padding: 0.5rem 1rem;
-}
-.btn-edit:hover {
-  background-color: #00bfa5;
+  color: var(--text-muted);
 }
 
-.btn-delete {
-  background-color: var(--error-color);
-  color: #121212;
-  font-size: 0.8rem;
-  padding: 0.5rem 1rem;
-}
-.btn-delete:hover {
-  background-color: #c54859;
-}
-
-.error-message {
-  color: var(--error-color);
-  margin-top: 1rem;
+.alert-error {
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid var(--danger);
+  color: #fca5a5;
+  padding: 1rem;
+  border-radius: var(--radius);
+  margin-bottom: 2rem;
 }
 
-/* --- Diseño Responsivo --- */
+/* --- Responsividad --- */
 @media (max-width: 900px) {
-  .content-layout {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 600px) {
-  .card {
-    padding: 1rem;
+  .layout-grid {
+    grid-template-columns: 1fr; /* En tablets/móviles, una sola columna */
   }
   
-  .btn {
-    width: 100%;
-    margin-bottom: 0.5rem;
-  }
-
-  .form-buttons {
-    flex-direction: column;
-  }
-  
-  /* Truco para tablas responsivas */
-  table thead {
-    display: none;
-  }
-  table tr {
-    display: block;
-    margin-bottom: 1rem;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 1rem;
-  }
-  table td {
-    display: block;
-    text-align: right;
-    padding-left: 50%;
-    position: relative;
-    border-bottom: none;
-  }
-  table td::before {
-    content: attr(data-label);
-    position: absolute;
-    left: 1rem;
-    font-weight: 600;
-    color: var(--secondary-color);
-    text-align: left;
+  .form-panel {
+    order: 1; /* Formulario primero en móviles? O puedes cambiar a 2 */
   }
 }
