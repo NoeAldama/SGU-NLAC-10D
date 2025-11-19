@@ -2,60 +2,57 @@ services:
   # --- REQUISITO: Base de datos ---
   database:
     image: mysql:8
-    container_name: sgu-database   # <-- Nombre obligatorio según PDF
+    container_name: sgu-database
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: sgu_db       # <-- El nombre de la BD
+      MYSQL_DATABASE: sgu_db
     ports:
       - "3307:3306"
     networks:
-      - sgu-net                    # <-- Red obligatoria
+      - sgu-net
     volumes:
-      - sgu-volume:/var/lib/mysql  # <-- Volumen obligatorio
+      - sgu-volume:/var/lib/mysql
 
   # --- REQUISITO: Cliente (Frontend) ---
   frontend:
-    image: client:1.0-sgu          # <-- Imagen y versión obligatoria
+    image: client:1.0-sgu
     build:
       context: ./client
-      # Pasamos los argumentos para que Vite funcione (nuestro arreglo)
       args:
         API_HOST: localhost
         API_BASE: /sgu-api
         API_PORT: 8081
-    container_name: sgu-frontend   # <-- Nombre obligatorio
+    container_name: sgu-frontend
     ports:
       - "3000:80"
     networks:
       - sgu-net
     depends_on:
-      - backend                    # El frontend espera al backend
+      - backend
 
   # --- REQUISITO: Servidor (Backend) ---
   backend:
-    image: server:1.0-sgu          # <-- Imagen y versión obligatoria
+    image: server:1.0-sgu
     build:
       context: ./server
     environment:
       SERVER_PORT: 8080
-      DB_HOST: sgu-database        # <-- Se conecta a 'sgu-database', NO a localhost
+      DB_HOST: sgu-database
       DB_PORT: 3306
-      DB_NAME: sgu_db              # <-- Debe coincidir con la BD
+      DB_NAME: sgu_db
       DB_USER: root
       DB_PASSWORD: root
-    container_name: sgu-backend    # <-- Nombre obligatorio
+    container_name: sgu-backend
     ports:
       - "8081:8080"
     networks:
       - sgu-net
     depends_on:
-      - database                   # El backend espera a la base de datos
+      - database
 
-# --- REQUISITOS DE RED Y VOLUMEN ---
+# --- RED Y VOLUMEN AUTOMÁTICOS ---
 networks:
   sgu-net:
-    external: true                 # Le decimos que la crearemos manualmente
 
 volumes:
   sgu-volume:
-    external: true                 # Le decimos que lo crearemos manualmentee
