@@ -12,19 +12,17 @@ pipeline {
             }
         }
 
-        stage('Limpiando imágenes antiguas SGU') {
-            steps {
-                echo "Buscando y eliminando imágenes del proyecto sgu-project..."
-                bat(label: 'Eliminar imágenes SGU', script: """
-                    @echo on
-                    for /f "tokens=* delims=" %%i in ('docker images --filter "label=com.docker.compose.project=sgu-project" -q') do (
-                        echo Eliminando imagen %%i...
-                        docker rmi -f %%i
-                    )
-                    exit /b 0
-                """)
-            }
-        }
+       stage('Limpiando imágenes antiguas SGU') {
+    steps {
+        echo "Eliminando imágenes del proyecto sgu-project por nombre..."
+        bat """
+            @echo off
+            docker rmi -f client:1.0-sgu || echo Imagen client no existía
+            docker rmi -f server:1.0-sgu || echo Imagen server no existía
+            exit /b 0
+        """
+    }
+}
 
         stage('Obteniendo código del repositorio') {
             steps {
